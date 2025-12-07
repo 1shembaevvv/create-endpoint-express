@@ -62,19 +62,13 @@ const fullChangeTodo = async (req: Request, res: Response) => {
 
 	try {
 		const todoIndex = data.findIndex(todo => todo.id === Number(id));
+		const copyTodo = data[todoIndex];
 
-		// 1 вариант
 		const newTodo = {
-			id: data[todoIndex].id,
-			name: (data[todoIndex].name = name),
-			description: (data[todoIndex].description = description),
+			id: copyTodo.id,
+			name: (copyTodo.name = name),
+			description: (copyTodo.description = description),
 		};
-
-		// 2 вариант
-		// data[todoIndex].name = name;
-		// data[todoIndex].description = description;
-
-		// const newTodo = data[todoIndex];
 
 		res.status(200).send({
 			success: true,
@@ -85,4 +79,33 @@ const fullChangeTodo = async (req: Request, res: Response) => {
 	}
 };
 
-export default { getTodos, createTodo, deleteTodo, fullChangeTodo };
+const changePatchTodo = async (req: Request, res: Response) => {
+	const { name, description } = req.body;
+	const { id } = req.params;
+
+	try {
+		const todoIndex = data.findIndex(todo => todo.id === Number(id));
+		const copyTodo = data[todoIndex];
+
+		const newTodo = {
+			...copyTodo,
+			name: name ? name : copyTodo.name,
+			description: description ? description : copyTodo.description,
+		};
+
+		res.status(200).send({
+			success: true,
+			data: newTodo,
+		});
+	} catch (e) {
+		console.error(e);
+	}
+};
+
+export default {
+	getTodos,
+	createTodo,
+	deleteTodo,
+	fullChangeTodo,
+	changePatchTodo,
+};
