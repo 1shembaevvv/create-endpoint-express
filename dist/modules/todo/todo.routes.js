@@ -10,4 +10,5 @@ router.get("/get-all", todo_controller_1.default.getTodos);
 router.post("/create", todo_controller_1.default.createTodo);
 router.delete("/delete/:id", todo_controller_1.default.deleteTodo);
 router.put("/full-change/:id", todo_controller_1.default.fullChangeTodo);
+router.patch("/change/:id", todo_controller_1.default.changePatchTodo);
 exports.default = router;
